@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KTS Kalkulator</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Asap+Condensed:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Wordpress Start -->
+    <div class="first hidden screen">
+      <h2>WIELKOŚĆ POMIESZCZENIA</h2>
+      <form class="form" action="">
+        <div class="grid-container">
+          <div class="grid-element radio radio__mesurments">
+            <input class="" type="radio" name="calculate" id="mesurments" />
+            <label class="" for="mesurments"></label>
+          </div>
+
+          <div class="grid-element radio radio__area">
+            <input class="" type="radio" name="calculate" id="area" />
+            <label class="" for="area"></label>
+          </div>
+
+          <div class="grid-element mesurments">
+            <div class="text-input">
+              <label for="length">Długość</label>
+              <input type="text" id="length" class="text-box length" />
+            </div>
+            <div class="text-input">
+              <label for="width">Szerokość</label>
+              <input type="text" id="width" class="text-box" />
+            </div>
+          </div>
+          <div class="grid-element" id="area">
+            <div class="text-input">
+              <label for="area__value">Powierzchnia</label>
+              <input type="text" id="area__value" class="text-box" />
+            </div>
+          </div>
+        </div>
+        <div class="windows__next_container">
+          <input type="submit" class="button" value="Dalej" />
+        </div>
+      </form>
+    </div>
+
+    <div class="second hidden screen">
+      <h2>OKNA W POMIESZCZENIU</h2>
+      <form class="form windows" action="">
+        <div class="flex-container">
+          <span>1.</span>
+          <div>
+            <label for="windows__width">Szerokość</label>
+            <input id="windows__width" type="text" value="" />
+          </div>
+          <div>
+            <label for="windows__width">Wysokość</label>
+            <input id="windows__height" type="text" value="" />
+          </div>
+          <div>
+            <label for="windows__direction">Kierunek</label>
+            <select name="kierunek" id="direction">
+              <option value="north">północ</option>
+              <option value="south">południe</option>
+              <option value="east">wschód</option>
+              <option value="weast">zachód</option>
+            </select>
+          </div>
+          <input class="button__windows" type="button" value="+" />
+        </div>
+        <input type="submit" id="windows__next" class="button" value="Dalej" />
+      </form>
+    </div>
+    <div class="hidden third screen">
+      <h2>ŚREDNIA ILOŚĆ OSÓB PRZEBYWAJĄCYCH W POMIESZCZENIU</h2>
+      <form action="">
+        <label for="people">Wpisz ilość</label>
+        <input type="text" id="people" name="" id="">
+      </form>
+    </div>
+    <div class="hidden fourth screen"></div>
+    <div class="hidden fifth screen"></div>
+    <!-- Wordpress End -->
+  </body>
+</html>
+
+<script></script>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    font-family: "Asap Condensed", sans-serif;
+  }
+
+  h2 {
+    text-align: center;
+    padding: 8px;
+    font-size: 2rem;
+    text-decoration: underline;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .screen {
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+    background-color: #f4f4f4;
+  }
+
+  /* Screen two */
+  .flex-container {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    margin: 10px;
+    flex-wrap: wrap;
+    width: 700px;
+  }
+
+  @media (max-width: 710px) {
+    .flex-container {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .flex-container input[type="button"] {
+      margin: 22px auto 35px auto;
+    }
+  }
+
+  .flex-container input,
+  .flex-container label,
+  .flex-container span {
+    margin: 10px 10px;
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .flex-container select,
+  .flex-container option {
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .flex-container .button__windows {
+    margin-left: 30px;
+    text-align: center;
+    text-justify: center;
+  }
+
+  .button__windows {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+  }
+
+  #windows__width,
+  #windows__height {
+    width: 80px;
+    height: 40px;
+  }
+
+  .windows__next_container {
+    width: 100vw;
+    display: inline-block;
+  }
+
+  #windows__next {
+    margin-top: auto;
+    margin-bottom: 10px;
+  }
+  
+  .windows {
+    height: 100%;
+    margin: 8px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  /* Screen one */
+
+  .grid-container {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 0.2fr 1fr;
+    grid-template-areas:
+      "one two"
+      "three four";
+  }
+
+  .grid-element {
+    padding: 1rem;
+    margin: 8px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .radio__mesurments {
+    grid-area: one;
+    color: #171717;
+  }
+
+  .radio__area {
+    grid-area: two;
+    color: #171717;
+  }
+
+  .mesurments {
+    grid-area: three;
+  }
+
+  #area {
+    grid-area: four;
+    justify-content: flex-start;
+  }
+
+  @media (max-width: 700px) {
+    .grid-container {
+      grid-template-columns: repeat(1, 1fr);
+      grid-template-rows: 0.2fr 1fr 0.2fr 1fr;
+      grid-template-areas:
+        "one"
+        "three"
+        "two"
+        "four";
+    }
+  }
+
+  .text-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+    height: 80px;
+  }
+
+  .text-input label {
+    font-size: 1.3rem;
+  }
+
+  .text-box {
+    height: 2.2rem;
+    width: 80px;
+  }
+
+  .grid-element input {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .grid-container input[type="radio"] {
+    opacity: 0;
+    width: 0;
+  }
+
+  .radio label {
+    width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 2px solid #171717;
+    background-color: white;
+    cursor: pointer;
+  }
+
+  .radio input[type="radio"]:checked + label::after {
+    display: block;
+  }
+
+  .radio input[type="radio"]:focus + label {
+    background-color: #17171710;
+  }
+
+  .radio label::after {
+    content: "";
+    display: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 10px;
+    background-color: black;
+  }
+
+  .button {
+    width: 100px;
+    height: 40px;
+    font-size: 1rem;
+    margin: 8px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .form {
+    width: 100%;
+    min-height: 360px;
+  }
+
+</style>
