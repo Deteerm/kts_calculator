@@ -45,12 +45,12 @@
           </div>
         </div>
         <div class="windows__next_container">
-          <input type="submit" class="button" value="Dalej" />
+          <input type="submit" class="button dimensions-button" value="Dalej" />
         </div>
       </form>
     </div>
 
-    <div class="second screen">
+    <div class="second screen hidden">
       <h2>OKNA W POMIESZCZENIU</h2>
       <form class="form windows" action="">
         <div class="flex-container">
@@ -78,31 +78,34 @@
       </form>
     </div>
 
-    <div class="third screen">
+    <div class="third screen hidden">
       <h2>ŚREDNIA ILOŚĆ OSÓB PRZEBYWAJĄCYCH W POMIESZCZENIU</h2>
       <form class="form people" action="">
         <div id="people_container" class="flex-container">
           <label for="people">Wpisz ilość</label>
-          <input type="text" id="people" name="" id="">
+          <input type="text" id="people" name="" id="" />
         </div>
         <input type="submit" id="people_next" class="button" value="Dalej" />
       </form>
     </div>
-    <div class="fourth screen">
+    <div class="fourth screen hidden">
       <h2>WYNIK</h2>
       <form action="" class="form">
         <div class="results">
           <div class="form-element">
             <label for="result">Dobrana moc klimatyzatora: </label>
-            <input type="text" name="result" id="result">
+            <input type="text" name="result" id="result" />
           </div>
           <div class="form-element">
-            <label for="email">Podaj email otrzymasz ofertę dopasowanych dla Ciebie klimatyzatorów: </label>
-            <input type="text" name="email" id="email">
+            <label for="email"
+              >Podaj email otrzymasz ofertę dopasowanych dla Ciebie
+              klimatyzatorów:
+            </label>
+            <input type="text" name="email" id="email" />
           </div>
           <div class="form-element">
             <label for="phone_number">Opcjonalnie zostaw numer: </label>
-            <input type="text" name="phone_number" id="phone_number">
+            <input type="text" name="phone_number" id="phone_number" />
           </div>
         </div>
       </form>
@@ -112,7 +115,27 @@
   </body>
 </html>
 
-<script></script>
+<script>
+  const first = document.querySelector(".first");
+  const second = document.querySelector(".second");
+  const third = document.querySelector(".third");
+  const fourth = document.querySelector(".fourth");
+
+  const handleNext = (e, homeScreen, nextScreen) => {
+    e.preventDefault();
+    homeScreen.classList.add("hidden"));
+    nextScreen.classList.remove("hidden"));
+  };
+
+  const firstButton = document.querySelector(".dimensions-button");
+  const secondButton = document.querySelector(".dimensions-button");
+  //const thirdButton = document.querySelector(".")
+
+  firstButton.addEventListener("click", (e) => handleNext(e, first, second));
+  firstButton.addEventListener("click", (e) => handleNext(e, first, second));
+  firstButton.addEventListener("click", (e) => handleNext(e, first, second));
+  firstButton.addEventListener("click", (e) => handleNext(e, first, second));
+</script>
 
 <style>
   * {
@@ -193,7 +216,6 @@
     justify-items: center;
     margin: 10px 0;
     flex-wrap: wrap;
-    width: 700px;
   }
 
   @media (max-width: 710px) {
@@ -223,7 +245,6 @@
     font-size: 1rem;
   }
 
-
   .flex-container .button__windows {
     margin-left: 30px;
     text-align: center;
@@ -252,7 +273,7 @@
     margin-top: auto;
     margin-bottom: 10px;
   }
-  
+
   .windows {
     height: 100%;
     margin: 8px auto;
@@ -382,5 +403,4 @@
     width: 100%;
     min-height: 360px;
   }
-
 </style>
