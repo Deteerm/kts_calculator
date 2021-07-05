@@ -13,7 +13,7 @@
   </head>
   <body>
     <!-- Wordpress Start -->
-    <div class="first hidden screen">
+    <div class="first screen">
       <h2>WIELKOŚĆ POMIESZCZENIA</h2>
       <form class="form" action="">
         <div class="grid-container">
@@ -50,7 +50,7 @@
       </form>
     </div>
 
-    <div class="second hidden screen">
+    <div class="second screen">
       <h2>OKNA W POMIESZCZENIU</h2>
       <form class="form windows" action="">
         <div class="flex-container">
@@ -77,14 +77,36 @@
         <input type="submit" id="windows__next" class="button" value="Dalej" />
       </form>
     </div>
-    <div class="hidden third screen">
+
+    <div class="third screen">
       <h2>ŚREDNIA ILOŚĆ OSÓB PRZEBYWAJĄCYCH W POMIESZCZENIU</h2>
-      <form action="">
-        <label for="people">Wpisz ilość</label>
-        <input type="text" id="people" name="" id="">
+      <form class="form people" action="">
+        <div id="people_container" class="flex-container">
+          <label for="people">Wpisz ilość</label>
+          <input type="text" id="people" name="" id="">
+        </div>
+        <input type="submit" id="people_next" class="button" value="Dalej" />
       </form>
     </div>
-    <div class="hidden fourth screen"></div>
+    <div class="fourth screen">
+      <h2>WYNIK</h2>
+      <form action="" class="form">
+        <div class="results">
+          <div class="form-element">
+            <label for="result">Dobrana moc klimatyzatora: </label>
+            <input type="text" name="result" id="result">
+          </div>
+          <div class="form-element">
+            <label for="email">Podaj email otrzymasz ofertę dopasowanych dla Ciebie klimatyzatorów: </label>
+            <input type="text" name="email" id="email">
+          </div>
+          <div class="form-element">
+            <label for="phone_number">Opcjonalnie zostaw numer: </label>
+            <input type="text" name="phone_number" id="phone_number">
+          </div>
+        </div>
+      </form>
+    </div>
     <div class="hidden fifth screen"></div>
     <!-- Wordpress End -->
   </body>
@@ -115,7 +137,53 @@
     width: 100%;
     height: 100%;
     min-height: 420px;
-    background-color: #f4f4f4;
+    overflow-x: hidden;
+  }
+
+  /* Screen four */
+  .results {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .results input {
+    max-width: 400px;
+    height: 40px;
+    font-size: 1rem;
+    margin: 10px;
+  }
+
+  .results label {
+    font-size: 1.3rem;
+    margin: 10px;
+  }
+
+  .form-element {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .form-element label {
+    display: inline-block;
+    max-width: 220px;
+  }
+
+  /* Screen three */
+  .people {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #people {
+    width: 50px;
+  }
+
+  #people_container {
+    width: 100%;
+    justify-content: center;
+    margin: auto 0;
   }
 
   /* Screen two */
@@ -123,7 +191,7 @@
     display: flex;
     align-items: center;
     justify-items: center;
-    margin: 10px;
+    margin: 10px 0;
     flex-wrap: wrap;
     width: 700px;
   }
@@ -149,9 +217,12 @@
 
   .flex-container select,
   .flex-container option {
+    margin: 10px 10px;
     height: 40px;
+    width: 80px;
     font-size: 1rem;
   }
+
 
   .flex-container .button__windows {
     margin-left: 30px;
