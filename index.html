@@ -18,12 +18,25 @@
       <form class="form" action="">
         <div class="grid-container">
           <div class="grid-element radio radio__mesurments">
-            <input class="" type="radio" name="calculate" id="mesurments" />
+            <input
+              class=""
+              type="radio"
+              name="calculate"
+              id="mesurments"
+              checked="checked"
+              onchange="changeHandler(this)"
+            />
             <label class="" for="mesurments"></label>
           </div>
 
           <div class="grid-element radio radio__area">
-            <input class="" type="radio" name="calculate" id="area" />
+            <input
+              class=""
+              type="radio"
+              name="calculate"
+              id="area"
+              onchange="changeHandler(this)"
+            />
             <label class="" for="area"></label>
           </div>
 
@@ -40,7 +53,7 @@
           <div class="grid-element" id="area">
             <div class="text-input">
               <label for="area__value">Powierzchnia</label>
-              <input type="text" id="area__value" class="text-box" />
+              <input type="text" id="area__value" class="text-box" disabled />
             </div>
           </div>
         </div>
@@ -50,6 +63,7 @@
       </form>
     </div>
 
+    <!-- SECOND SCREEN -->
     <div class="second screen hidden">
       <h2>OKNA W POMIESZCZENIU</h2>
       <form class="form windows" action="">
@@ -78,6 +92,7 @@
       </form>
     </div>
 
+    <!-- THIRD SCREEN -->
     <div class="third screen hidden">
       <h2>ŚREDNIA ILOŚĆ OSÓB PRZEBYWAJĄCYCH W POMIESZCZENIU</h2>
       <form class="form people" action="">
@@ -88,6 +103,8 @@
         <input type="submit" id="people_next" class="button" value="Dalej" />
       </form>
     </div>
+
+    <!-- FOURTH SCREEN -->
     <div class="fourth screen hidden">
       <h2>WYNIK</h2>
       <form action="" class="form">
@@ -128,13 +145,37 @@
   };
 
   const firstButton = document.querySelector(".dimensions-button");
-  const secondButton = document.querySelector(".dimensions-button");
-  //const thirdButton = document.querySelector(".")
+  const secondButton = document.querySelector("#windows__next");
+  const thirdButton = document.querySelector("#people_next");
 
   firstButton.addEventListener("click", (e) => handleNext(e, first, second));
-  firstButton.addEventListener("click", (e) => handleNext(e, first, second));
-  firstButton.addEventListener("click", (e) => handleNext(e, first, second));
-  firstButton.addEventListener("click", (e) => handleNext(e, first, second));
+  secondButton.addEventListener("click", (e) => handleNext(e, second, third));
+  thirdButton.addEventListener("click", (e) => handleNext(e, third, fourth));
+
+  function changeHandler(target) {
+    const id = target.id;
+    const area = document.querySelector("#area__value");
+    const length = document.querySelector("#length");
+    const width = document.querySelector("#width");
+
+    if (id == "area") {
+      length.disabled = true;
+      width.disabled = true;
+      area.disabled = false;
+
+      length.value = null;
+      width.value = null;
+    }
+    if (id == "mesurments") {
+      length.disabled = false;
+      width.disabled = false;
+      area.disabled = true;
+
+      area.value = null;
+    }
+
+    console.log(id);
+  }
 </script>
 
 <style>
@@ -161,6 +202,9 @@
     height: 100%;
     min-height: 420px;
     overflow-x: hidden;
+  }
+
+  .grayed-out {
   }
 
   /* Screen four */
