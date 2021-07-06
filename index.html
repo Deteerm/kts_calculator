@@ -13,7 +13,7 @@
   </head>
   <body>
     <!-- Wordpress Start -->
-    <div class="first screen">
+    <div class="first hidden screen">
       <h2>WIELKOŚĆ POMIESZCZENIA</h2>
       <form class="form" action="">
         <div class="grid-container">
@@ -64,7 +64,7 @@
     </div>
 
     <!-- SECOND SCREEN -->
-    <div class="second screen hidden">
+    <div class="second screen">
       <h2>OKNA W POMIESZCZENIU</h2>
       <form class="form windows" action="">
         <div class="flex-container">
@@ -86,7 +86,12 @@
               <option value="weast">zachód</option>
             </select>
           </div>
-          <input class="button__windows" type="button" value="+" />
+          <input
+            class="button__windows"
+            type="button"
+            value="+"
+            onclick="createWindow(this)"
+          />
         </div>
         <input type="submit" id="windows__next" class="button" value="Dalej" />
       </form>
@@ -138,10 +143,18 @@
   const third = document.querySelector(".third");
   const fourth = document.querySelector(".fourth");
 
+  let windowsAmount = 1;
+
   const handleNext = (e, homeScreen, nextScreen) => {
     e.preventDefault();
     homeScreen.classList.add("hidden");
     nextScreen.classList.remove("hidden");
+  };
+
+  // @TODO
+  const createWindow = (target) => {
+    console.log((target.parentNode.children[0].innerHTML = windowsAmount));
+    windowsAmount++;
   };
 
   const firstButton = document.querySelector(".dimensions-button");
