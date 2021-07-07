@@ -11,9 +11,10 @@
       rel="stylesheet"
     />
   </head>
+
   <body>
     <!-- Wordpress Start -->
-    <div class="first hidden screen">
+    <div class="first screen">
       <h2>WIELKOŚĆ POMIESZCZENIA</h2>
       <form class="form" action="">
         <div class="grid-container">
@@ -64,35 +65,16 @@
     </div>
 
     <!-- SECOND SCREEN -->
-    <div class="second screen">
+    <div class="second hidden screen">
       <h2>OKNA W POMIESZCZENIU</h2>
       <form class="form windows" action="">
-        <div class="flex-container">
-          <span>1.</span>
-          <div>
-            <label for="windows__width">Szerokość</label>
-            <input id="windows__width" type="text" value="" />
-          </div>
-          <div>
-            <label for="windows__width">Wysokość</label>
-            <input id="windows__height" type="text" value="" />
-          </div>
-          <div>
-            <label for="windows__direction">Kierunek</label>
-            <select name="kierunek" id="direction">
-              <option value="north">północ</option>
-              <option value="south">południe</option>
-              <option value="east">wschód</option>
-              <option value="weast">zachód</option>
-            </select>
-          </div>
-          <input
-            class="button__windows"
-            type="button"
-            value="+"
-            onclick="createWindow(this)"
-          />
-        </div>
+        <div class="flex-container form-for-windows"></div>
+        <input
+          class="button__windows"
+          type="button"
+          value="+"
+          onclick="createWindow()"
+        />
         <input type="submit" id="windows__next" class="button" value="Dalej" />
       </form>
     </div>
@@ -130,6 +112,7 @@
             <input type="text" name="phone_number" id="phone_number" />
           </div>
         </div>
+        <input type="submit" class="button" value="Wyślij" />
       </form>
     </div>
     <div class="hidden fifth screen"></div>
@@ -152,10 +135,61 @@
   };
 
   // @TODO
-  const createWindow = (target) => {
-    console.log((target.parentNode.children[0].innerHTML = windowsAmount));
-    windowsAmount++;
+
+  /* WINDOW */
+
+  const createWindow = () => {
+    windowsAmount += 1;
+    document
+      .querySelector(".form-for-windows")
+      .appendChild(template.content.cloneNode(true));
+
+    template.innerHTML = `<div class="flex-container centered">
+          <span>${windowsAmount}.</span>
+          <div>
+            <label for="windows__width">Szerokość</label>
+            <input id="windows__width" type="text" value="" />
+          </div>
+          <div>
+            <label for="windows__width">Wysokość</label>
+            <input id="windows__height" type="text" value="" />
+          </div>
+          <div>
+            <label for="windows__direction">Kierunek</label>
+            <select name="kierunek" id="direction">
+              <option value="north">północ</option>
+              <option value="south">południe</option>
+              <option value="east">wschód</option>
+              <option value="weast">zachód</option>
+            </select>
+          </div>
+        </div>`;
+
+    console.log(windowsAmount);
   };
+
+  const tagName = "my-window";
+  const template = document.createElement("template");
+  template.innerHTML = `<div class="flex-container centerd">
+          <span>${windowsAmount}.</span>
+          <div>
+            <label for="windows__width">Szerokość</label>
+            <input id="windows__width" type="text" value="" />
+          </div>
+          <div>
+            <label for="windows__width">Wysokość</label>
+            <input id="windows__height" type="text" value="" />
+          </div>
+          <div>
+            <label for="windows__direction">Kierunek</label>
+            <select name="kierunek" id="direction">
+              <option value="north">północ</option>
+              <option value="south">południe</option>
+              <option value="east">wschód</option>
+              <option value="weast">zachód</option>
+            </select>
+          </div>
+        </div>`;
 
   const firstButton = document.querySelector(".dimensions-button");
   const secondButton = document.querySelector("#windows__next");
@@ -217,9 +251,9 @@
     overflow-x: hidden;
   }
 
-  .grayed-out {
+  .centered {
+    margin: 5px auto;
   }
-
   /* Screen four */
   .results {
     display: flex;
@@ -267,6 +301,11 @@
   }
 
   /* Screen two */
+
+  .form-for-windows {
+    display: inline-block !important;
+  }
+
   .flex-container {
     display: flex;
     align-items: center;
@@ -311,6 +350,7 @@
   .button__windows {
     width: 35px;
     height: 35px;
+    margin-bottom: 30px;
     border-radius: 50%;
     font-size: 1.5rem;
   }
