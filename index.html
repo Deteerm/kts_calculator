@@ -98,7 +98,7 @@
         <div class="results">
           <div class="form-element">
             <label for="result">Dobrana moc klimatyzatora: </label>
-            <input type="text" name="result" id="result" />
+            <input type="text" name="result" id="result" value="123kW" readonly/>
           </div>
           <div class="form-element">
             <label for="email"
@@ -112,7 +112,7 @@
             <input type="text" name="phone_number" id="phone_number" />
           </div>
         </div>
-        <input type="submit" class="button" value="Wyślij" />
+        <input type="submit" class="button" value="Wyślij"/>
       </form>
     </div>
     <div class="hidden fifth screen"></div>
@@ -134,29 +134,74 @@
     nextScreen.classList.remove("hidden");
   };
 
-  // @TODO
+  const collectData = (dataObject) => {
+    dataObject.collectData()
+  }
+
+  /* DATA */
+
+  const firstScreen = {
+    mesurments : {
+      width: null,
+      length: null,
+      checked: true
+    },
+    area : {
+      areaValue : null,
+      checked: false
+    },
+    collectData() {
+
+      if (this.mesurments.checked) {
+        this.mesurments.length = document.querySelector("#length").value
+        this.mesurments.width = document.querySelector("#width").value
+      }
+
+      if (this.area.checked) {
+        this.area.areaValue = document.querySelector("#area__value")
+      }
+    }
+  }
+
+  const secondScreen = {
+    windows: {}
+  }
+
+  class WindowObject {
+    constructor(width, height, id, direction = "north") {
+      this.id = id;
+      this.width = width;
+      this.height = height;
+      this.direction = direction
+    }
+  }
+
+  const thirdScreen = {
+    peopleAmount : null
+  }
 
   /* WINDOW */
 
   const createWindow = () => {
-    windowsAmount += 1;
+    secondScreen.windows[`window-${windowsAmount}`] = new WindowObject(null, null, windowsAmount)
     document
       .querySelector(".form-for-windows")
       .appendChild(template.content.cloneNode(true));
 
-    template.innerHTML = `<div class="flex-container centered">
+    windowsAmount += 1;
+    template.innerHTML = `<div class="flex-container centered window-${windowsAmount}">
           <span>${windowsAmount}.</span>
           <div>
             <label for="windows__width">Szerokość</label>
-            <input id="windows__width" type="text" value="" />
+            <input id="windows__width" type="text" value="" onchange="windowChange(this)" />
           </div>
           <div>
             <label for="windows__width">Wysokość</label>
-            <input id="windows__height" type="text" value="" />
+            <input id="windows__height" type="text" value="" onchange="windowChange(this)"/>
           </div>
           <div>
             <label for="windows__direction">Kierunek</label>
-            <select name="kierunek" id="direction">
+            <select name="kierunek" id="direction" onchange="windowChange(this)">
               <option value="north">północ</option>
               <option value="south">południe</option>
               <option value="east">wschód</option>
@@ -165,24 +210,35 @@
           </div>
         </div>`;
 
-    console.log(windowsAmount);
   };
 
-  const tagName = "my-window";
+  const windowChange = (target) => {
+    
+    windowId = target.parentNode.parentNode.classList[2]
+
+    let width = document.querySelector("." + windowId).getElementById(windows__width).value
+    let height = document.querySelector("." + windowId).getElementById(windows__height).value
+    let direction = document.querySelector("." + windowId).getElementById(direction).value
+
+    secondScreen.windows[windowId].width = width
+    secondScreen.windows[windowId].height = height
+    secondScreen.windows[windowId].direction = direction
+  }
+
   const template = document.createElement("template");
-  template.innerHTML = `<div class="flex-container centerd">
+  template.innerHTML = `<div class="flex-container centered window-${windowsAmount}">
           <span>${windowsAmount}.</span>
           <div>
             <label for="windows__width">Szerokość</label>
-            <input id="windows__width" type="text" value="" />
+            <input id="windows__width" type="text" value="" onchange="windowChange(this)" />
           </div>
           <div>
             <label for="windows__width">Wysokość</label>
-            <input id="windows__height" type="text" value="" />
+            <input id="windows__height" type="text" value="" onchange="windowChange(this)"/>
           </div>
           <div>
             <label for="windows__direction">Kierunek</label>
-            <select name="kierunek" id="direction">
+            <select name="kierunek" id="direction" onchange="windowChange(this)">
               <option value="north">północ</option>
               <option value="south">południe</option>
               <option value="east">wschód</option>
@@ -196,6 +252,7 @@
   const thirdButton = document.querySelector("#people_next");
 
   firstButton.addEventListener("click", (e) => handleNext(e, first, second));
+  firstButton.addEventListener("click", () => collectData(firstScreen));
   secondButton.addEventListener("click", (e) => handleNext(e, second, third));
   thirdButton.addEventListener("click", (e) => handleNext(e, third, fourth));
 
@@ -212,6 +269,9 @@
 
       length.value = null;
       width.value = null;
+
+      firstScreen.area.checked = true;
+      firstScreen.mesurments.checked = false;
     }
     if (id == "mesurments") {
       length.disabled = false;
@@ -219,9 +279,10 @@
       area.disabled = true;
 
       area.value = null;
-    }
 
-    console.log(id);
+      firstScreen.area.checked = false;
+      firstScreen.mesurments.checked = true;
+    }
   }
 </script>
 
@@ -282,6 +343,10 @@
   .form-element label {
     display: inline-block;
     max-width: 220px;
+  }
+
+  #result, #phone_number, #email {
+    text-align: center;
   }
 
   /* Screen three */
