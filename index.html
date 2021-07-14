@@ -98,7 +98,7 @@
         <div class="results">
           <div class="form-element">
             <label for="result">Dobrana moc klimatyzatora: </label>
-            <input type="text" name="result" id="result" value="123kW" readonly/>
+            <input type="text" name="result" id="result" value="" readonly />
           </div>
           <div class="form-element">
             <label for="email"
@@ -112,10 +112,9 @@
             <input type="text" name="phone_number" id="phone_number" />
           </div>
         </div>
-        <input type="submit" class="button" value="Wyślij"/>
+        <input type="submit" class="button" value="Wyślij" />
       </form>
     </div>
-    <div class="hidden fifth screen"></div>
     <!-- Wordpress End -->
   </body>
 </html>
@@ -135,55 +134,61 @@
   };
 
   const collectData = (dataObject) => {
-    dataObject.collectData()
-  }
+    dataObject.collectData();
+  };
 
   /* DATA */
 
   const firstScreen = {
-    mesurments : {
+    mesurments: {
       width: null,
       length: null,
-      checked: true
+      checked: true,
     },
-    area : {
-      areaValue : null,
-      checked: false
+    area: {
+      areaValue: null,
+      checked: false,
     },
     collectData() {
-
       if (this.mesurments.checked) {
-        this.mesurments.length = document.querySelector("#length").value
-        this.mesurments.width = document.querySelector("#width").value
+        this.mesurments.length = document.querySelector("#length").value;
+        this.mesurments.width = document.querySelector("#width").value;
       }
 
       if (this.area.checked) {
-        this.area.areaValue = document.querySelector("#area__value")
+        this.area.areaValue = document.querySelector("#area__value");
       }
-    }
-  }
+    },
+  };
 
   const secondScreen = {
-    windows: {}
-  }
+    windows: {},
+  };
 
   class WindowObject {
     constructor(width, height, id, direction = "north") {
       this.id = id;
       this.width = width;
       this.height = height;
-      this.direction = direction
+      this.direction = direction;
     }
   }
 
   const thirdScreen = {
-    peopleAmount : null
-  }
+    peopleAmount: null,
+    collectData() {
+      this.peopleAmount = document.querySelector("#people").value;
+    },
+  };
 
   /* WINDOW */
 
   const createWindow = () => {
-    secondScreen.windows[`window-${windowsAmount}`] = new WindowObject(null, null, windowsAmount)
+    secondScreen.windows[`window-${windowsAmount}`] = new WindowObject(
+      0,
+      0,
+      windowsAmount
+    );
     document
       .querySelector(".form-for-windows")
       .appendChild(template.content.cloneNode(true));
@@ -205,25 +210,29 @@
               <option value="north">północ</option>
               <option value="south">południe</option>
               <option value="east">wschód</option>
-              <option value="weast">zachód</option>
+              <option value="west">zachód</option>
             </select>
           </div>
         </div>`;
-
   };
 
   const windowChange = (target) => {
-    
-    windowId = target.parentNode.parentNode.classList[2]
+    windowId = target.parentNode.parentNode.classList[2];
 
-    let width = document.querySelector("." + windowId).getElementById(windows__width).value
-    let height = document.querySelector("." + windowId).getElementById(windows__height).value
-    let direction = document.querySelector("." + windowId).getElementById(direction).value
+    let width = document
+      .querySelector("." + windowId)
+      .querySelector("#windows__width").value;
+    let height = document
+      .querySelector("." + windowId)
+      .querySelector("#windows__height").value;
+    let direction = document
+      .querySelector("." + windowId)
+      .querySelector("#direction").value;
 
-    secondScreen.windows[windowId].width = width
-    secondScreen.windows[windowId].height = height
-    secondScreen.windows[windowId].direction = direction
-  }
+    secondScreen.windows[windowId].width = width;
+    secondScreen.windows[windowId].height = height;
+    secondScreen.windows[windowId].direction = direction;
+  };
 
   const template = document.createElement("template");
   template.innerHTML = `<div class="flex-container centered window-${windowsAmount}">
@@ -242,7 +251,7 @@
               <option value="north">północ</option>
               <option value="south">południe</option>
               <option value="east">wschód</option>
-              <option value="weast">zachód</option>
+              <option value="west">zachód</option>
             </select>
           </div>
         </div>`;
@@ -255,6 +264,40 @@
   firstButton.addEventListener("click", () => collectData(firstScreen));
   secondButton.addEventListener("click", (e) => handleNext(e, second, third));
   thirdButton.addEventListener("click", (e) => handleNext(e, third, fourth));
+  thirdButton.addEventListener("click", () => collectData(thirdScreen));
+  thirdButton.addEventListener("click", () => calculateResult());
+
+  function calculateResult() {
+    let area = 0;
+    let windowValue = 0;
+    const peopleAmount = +thirdScreen.peopleAmount;
+
+    if (firstScreen.area.checked) {
+      area = +firstScreen.area;
+    } else if (firstScreen.mesurments.checked) {
+      area = +firstScreen.mesurments.length * +firstScreen.mesurments.width;
+    }
+
+    for (let key in secondScreen.windows) {
+      windows = secondScreen.windows;
+
+      if (
+        windows[key].direction === "north" ||
+        windows[key].direction === "south"
+      ) {
+        windowValue += windows[key].width * windows[key].height * 4;
+      } else {
+        windowValue += windows[key].width * windows[key].height * 2;
+      }
+    }
+
+    console.log(area);
+    console.log(windowValue);
+    console.log(peopleAmount);
+
+    const result = area + windowValue + peopleAmount;
+    document.querySelector("#result").value = result + "kW";
+  }
 
   function changeHandler(target) {
     const id = target.id;
@@ -345,7 +388,9 @@
     max-width: 220px;
   }
 
-  #result, #phone_number, #email {
+  #result,
+  #phone_number,
+  #email {
     text-align: center;
   }
 
